@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Celedra</title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: 'Montserrat', sans-serif; overflow: hidden; }
+
+    .header-font {
+        font-family: "Shadows Into Light", cursive;
+        font-weight: 400;
+      }
+      
+    /* Fullscreen Video Background */
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
+    .video-container video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+    .video-container .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 0;
+    }
+
+    /* Header & Navigation */
+    .header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+    /* Logo as a smaller 50x50 GIF */
+    .logo {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        margin-right: 1rem;
+      }
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+      nav ul { list-style: none; display: flex; }
+      nav ul li { position: relative; }
+      nav ul li a {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 400;
+        background: transparent;
+      }
+      nav ul li:hover > a { background: rgba(0,0,0,0.5); }
+      nav ul li ul {
+        position: absolute; top: 100%; left: 0;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        list-style: none;
+        min-width: 180px;
+      }
+      nav ul li:hover > ul { display: block; }
+      nav ul li ul li ul { left: 100%; top: 0; }
+  
+      /* Landing Title */
+      .title {
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 6rem;
+        font-weight: 600;
+        z-index: 2;
+        text-align: center;
+        color: #ff845c;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+      }
+  
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .header { flex-direction: column; }
+      nav ul { flex-direction: column; width: 100%; }
+      nav ul li ul, nav ul li:hover > ul { position: static; }
+      .title { font-size: 2.5rem; padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-container">
+    <!-- The MP4 file is located alongside this HTML -->
+    <video src="images/landing.mp4" autoplay muted loop playsinline></video>
+    <div class="overlay"></div>
+
+    <header class="header">
+      <!-- Logo replaced by 150x150 video -->
+      <div class="logo">
+        <img src="images/logo.gif" alt="Vacation Plan Logo" id="logoGif" />
+      </div>
+      
+      <!-- hidden audio element -->
+      <audio id="honkSound" src="images/honk.mp3" preload="auto"></audio>
+      <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+          <li>
+            <a href="#">Options</a>
+            <ul>
+                <li><a href="#">Out-of-Town</a>
+                  <ul>
+                    <li><a href="aurora.html">Aurora</a></li>
+                    <li><a href="zambales.html">Zambales</a></li>
+                    <li><a href="el_nido.html">Pangasinan</a></li>
+                    <li><a href="batanes.html">Aurora</a></li>
+                    <li><a href="boracay.html">Pangasinan</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Out-of-Country</a>
+                  <ul>
+                    <li><a href="indonesia.html">Indonesia</a></li>
+                    <li><a href="thailand.html">Thailand</a></li>
+                    <li><a href="vietnam.html">Vietnam</a></li>
+                  </ul>
+                </li>
+              </ul>
+          </li>
+          <li><a href="cast-my-vote.html">Cast My Vote</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="title header-font">Vacation Plan</div>
+  </div>
+  <script>
+    const logoImg = document.getElementById('logoGif');
+    const honk = document.getElementById('honkSound');
+  
+    logoImg.addEventListener('click', () => {
+      // rewind in case it’s already playing
+      honk.currentTime = 0;
+      honk.play();
+    });
+  </script>
+</body>
+</html>

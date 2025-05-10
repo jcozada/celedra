@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thailand - 2025 Vacation Plan</title>
+  <style>
+    /* Base & Resets */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {overflow-y: auto;}
+    body { font-family: Arial, sans-serif; line-height: 1.5; overflow-y: auto;}
+    .section { padding: 2rem; }
+    h2 { text-align: center; margin-bottom: 1rem; }
+
+    /* Fullscreen Video Background */
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -3;
+      }
+      .video-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+        z-index: -2;
+      }
+      .video-container .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0);
+        z-index: -1;
+      }
+    /* Header & Navigation */
+    .header { position: absolute; top: 0; width: 100%; display: flex; justify-content: flex-start; align-items: center; padding: 1rem 2rem; background: rgba(0,0,0,0.2); z-index: 12; }
+    .logo { width: 50px; height: 50px; margin-right: 1rem; }
+    .logo img { width: 100%; height: 100%; object-fit: contain; }
+    nav ul { list-style: none; display: flex; }
+    nav ul li { position: relative; }
+    nav ul li a { display: block; padding: 0.5rem 1rem; color: #fff; text-decoration: none; }
+    nav ul li:hover > a { background: rgba(0,0,0,0.5); }
+    nav ul li ul { position: absolute; top: 100%; left: 0; background: rgba(0,0,0,0.6); display: none; list-style: none; min-width: 180px; }
+    nav ul li:hover > ul { display: block; }
+    nav ul li ul li ul { left: 100%; top: 0; }
+
+    /* Main “Things to Do” carousel */
+  .block-carousel { position: relative; overflow: hidden;}
+  .carousel-items { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: 23rem; gap: 8.5rem; animation: scroll-left 30s linear infinite; }
+  .block-carousel[data-animated="false"] .carousel-items { animation: none;}
+  .carousel-items li { cursor: pointer; position: relative; }
+  .carousel-items li:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); animation: popBounce 0.6s ease-in-out; }
+  .carousel-items img { width: 100%; height: 22rem; object-fit: cover; border-radius: 4px; opacity: 0.85; border-radius: 20px;}
+  
+  /* Reverse/rightward scroll for food carousel */
+  .block-carousel-food { position: relative; overflow: hidden; }
+  .carousel-items-food { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: 23rem; gap: 8.5rem; animation: scroll-right 40s linear infinite;}
+  .block-carousel-food[data-animated="false"] .carousel-items-food { animation: none;}
+  .carousel-items-food li { cursor: pointer; position: relative; }
+  .carousel-items-food img { width: 100%; height: 16rem; object-fit: cover; border-radius: 4px; opacity: 0.85; border-radius:100px;}
+  
+  /* Keyframes */
+  @keyframes scroll-left { from { transform: translateX(0); } to   { transform: translateX(calc(-50% - 1rem)); }}
+  @keyframes scroll-right { from { transform: translateX(calc(-50% - 1rem)); } to   { transform: translateX(0); }}
+    /* Description panel styling */
+    .desc-content { display: none; font-size:5px; letter-spacing: 1px;}
+    .modal .desc h3 { margin-bottom: 1rem; text-align: center; font-size:10px; letter-spacing: 1px;}
+    .modal .desc h4 { margin-top: 1rem; margin-left: 20px; margin-bottom:0.75rem; font-size:10px; letter-spacing: 1px;}
+    .modal .desc p { margin-left: 40px; margin-bottom: 0.75rem; font-size:10px; letter-spacing: 1px;}
+    .desc-content-food { font-size:13px; letter-spacing: 1px; text-align:center; color:#f1f1f1; background-color: rgba(0,0,0,0.3);}
+
+    /* Modal */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index:15;}
+    .modal-content { background: #fff; width: 80%; height: 80%; border-radius: 8px; display: flex; animation: popIn 0.3s ease-out; overflow: hidden; }
+    @keyframes popIn { 0% { transform: scale(0.5); opacity:0; } 80% { transform: scale(1.05); opacity:1; } 100% { transform: scale(1); } }
+    .modal-content img { width: 50%; height: 100%; object-fit: cover; }
+    .modal-content .desc { width: 50%; padding: 2rem; overflow-y: auto; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; color: #fff; font-size: 2rem; cursor: pointer; }
+
+    /* Pricing Table Styles */
+    .pricing-section {
+        color: #F8F8F2;
+    }
+    .pricing-card {
+        background-color: rgba(52, 53, 68, 0.7);
+        text-align:center;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .pricing-table {
+        width: 100%;
+        text-align:center;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    .pricing-table tr {
+        border-bottom: 1px solid #444;
+        text-align:center;
+    }
+    .pricing-table td,
+    .pricing-table th {
+        padding: 1rem;
+        text-align:center;
+    }
+    .pricing-table .total-row {
+        text-align:center;
+        border: none;
+    }
+    .price-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        text-align:center;
+        font-weight: 600;
+        background: linear-gradient(90deg, #50fa7b, #8be9fd);
+        color: #282A36;
+    }
+    .price-badge-total {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        text-align:center;
+        font-weight: 600;
+        background: linear-gradient(90deg, #50d2fa, #8165f3);
+        color: #282A36;
+    }
+  
+
+    /* Responsive */
+    @media (max-width: 768px) { .header { flex-direction: column; } nav ul { flex-direction: column; width: 100%; } }
+  </style>
+</head>
+<body>
+    <div class="video-container">
+        <!-- The MP4 file is located alongside this HTML -->
+        <video src="images/thailand-bg.mp4" autoplay muted loop playsinline></video>
+        <div class="overlay"></div>
+    </div>
+  <header class="header">
+    <div class="logo">
+        <img src="images/logo.gif" alt="Vacation Plan Logo" id="logoGif" />
+      </div>
+      
+      <!-- hidden audio element -->
+      <audio id="honkSound" src="images/honk.mp3" preload="auto"></audio>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Options</a>
+            <ul>
+                <li><a href="#">Out-of-Town</a>
+                  <ul>
+                    <li><a href="aurora.html">Aurora</a></li>
+                    <li><a href="zambales.html">Zambales</a></li>
+                    <li><a href="el_nido.html">El Nido</a></li>
+                    <li><a href="batanes.html">Batanes</a></li>
+                    <li><a href="boracay.html">Pangasinan</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Out-of-Country</a>
+                  <ul>
+                    <li><a href="indonesia.html">Indonesia</a></li>
+                    <li><a href="thailand.html">Thailand</a></li>
+                    <li><a href="vietnam.html">Vietnam</a></li>
+                  </ul>
+                </li>
+              </ul>
+        </li>
+        <li><a href="cast-my-vote.html">Cast My Vote</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 1. Things to Do -->
+</br>
+</br>
+</br>
+  <section id="things-to-do" class="section">
+    <h2>Things to Do in Thailand</h2>
+    <div class="block-carousel" data-animated="true">
+      <ul class="carousel-items">
+        <li>
+          <img src="images/bangkok.jpg" alt="Ha Long Bay">
+          <div class="desc-content">
+            <h3>Bangkok</h3>
+            <p>The vibrant capital of Thailand, is a city that seamlessly blends ancient temples and traditions with modern skyscrapers and bustling nightlife. Here's a list of the top things to do in Bangkok:</p>
+            <h4>Temples and Palaces:</h4>
+            <p><strong>Wat Phra Kaew (Temple of the Emerald Buddha):</strong> Located within the Grand Palace complex, this is Thailand's most sacred temple, housing the revered Emerald Buddha image.</p>
+            <p><strong>The Grand Palace:</strong> A magnificent complex of former royal residences and government buildings, showcasing stunning Thai architecture and intricate details.</p>
+            <p><strong>Wat Pho (Temple of the Reclining Buddha):</strong> Home to the impressive 46-meter-long reclining Buddha statue covered in gold leaf, as well as a renowned traditional Thai massage school.</p>
+            <p><strong>Wat Arun (Temple of Dawn):</strong> An iconic riverside temple with a distinctive Khmer-style spire, offering stunning views of the Chao Phraya River, especially at sunset.</p>
+            <p><strong>Wat Saket (The Golden Mount):</strong> Climb the spiraling staircase to the top of this artificial hill for panoramic views of the Old City.</p>
+            <p><strong>Wat Benchamabophit (The Marble Temple):</strong> A beautiful temple built with white Carrara marble, featuring intricate Thai architecture and a serene atmosphere.</p>
+            <h4>Rivers and Waterways:</h4>
+            <p><strong>Chao Phraya River Cruise:</strong> Take a scenic boat trip along the "River of Kings" to see the city from a different perspective, especially beautiful at night.</p>
+            <p><strong>Explore the Khlongs (Canals):</strong> Discover Bangkok's traditional side by taking a longtail boat ride through the intricate network of canals, offering glimpses of local life along the waterways. Visit floating markets like Damnoen Saduak or Amphawa (slightly outside the city but popular day trips).</p>
+            <h4>Other Activities</h4>
+            <p>Visit Chatuchak Weekend Market, Terminal 21, Yaowarat (Chinatown) and Pak Khlong Talat (Flower Market). Indulge in street food and Rooftop bars.</p>
+          </div>
+        </li>
+        <li>
+        <img src="images/chiang.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Chiang Mai</h3>
+              <p>The "Rose of the North," is a charming city in northern Thailand known for its relaxed atmosphere, ancient temples, stunning natural landscapes, and vibrant cultural scene. Here's a list of the top things to do in Chiang Mai:</p>
+              <h4>Temples (Wats):</h4>
+              <p><strong>Wat Phra That Doi Suthep:</strong> The most famous temple in Chiang Mai, perched on a mountaintop offering breathtaking panoramic views of the city.</p>
+              <p><strong>Wat Chedi Luang:</strong> A significant temple in the heart of the Old City, known for its massive, partially ruined chedi (stupa).</p>
+              <p><strong>Wat Phra Singh Waramahawihan:</strong> A beautiful temple complex housing the revered Phra Singh Buddha image.</p>
+              <p><strong>Wat Chiang Man:</strong> The oldest temple within the Old City walls, featuring ancient chedis and historical significance.</p>
+              <p><strong>Wat Suan Dok:</strong> Known for its large field of white chedis containing the ashes of Lanna royalty.</p>
+              <p><strong>Wat Umong:</strong> A unique forest temple with ancient tunnels and meditation areas.</p>
+              <h4>Exploring the Old City:</h4>
+              <p><strong>Stroll through the Sunday Walking Street Market:</strong> A vibrant market offering handicrafts, souvenirs, street food, and cultural performances (held every Sunday evening).</p>
+              <p><strong>Visit the Three Kings Monument:</strong> A significant landmark in the Old City, commemorating the founders of Chiang Mai.</p>
+              <h4>Nature and Adventure:</h4>
+              <p><strong>Visit Doi Inthanon National Park:</strong> Home to Thailand's highest peak, offering stunning mountain scenery, waterfalls, hiking trails, and diverse flora and fauna.</p>
+              <p><strong>Explore Doi Suthep-Pui National Park:</strong> Besides Wat Phra That Doi Suthep, the park offers hiking trails, waterfalls (like Mae Sa Waterfall and Huay Kaew Waterfall), and viewpoints.</p>
+              <p><strong>Elephant Sanctuaries:</strong> Ethically interact with rescued elephants at reputable sanctuaries that prioritize their well-being (avoid riding elephants). Popular options include Elephant Nature Park and others.</p>
+              <p><strong>Hike to waterfalls:</strong> Discover beautiful cascades like Bua Thong (Sticky Waterfall) where you can climb the mineral deposits.</p>
+              <p><strong>Go ziplining through the jungle:</strong> Experience an adrenaline rush while enjoying the lush canopy.</p>
+              <p><strong>Explore the Chiang Mai Night Safari:</strong> See nocturnal animals in a simulated natural environment.</p>
+              <h4>Other Activities</h4>
+              <p>Visit the Chiang Mai National Museum, Indulge in Khao Soi(Chiang Mai's signature dish), Explore the street food scene, Enjoy a traditional Khantoke dinner</p>
+            </div>
+          </li>
+          <li>
+        <img src="images/phuket.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Phuket</h3>
+              <p>Thailand's largest island, is a popular destination known for its stunning beaches, vibrant nightlife, beautiful temples, and diverse activities. Here's a list of the top things to do in Phuket:</p>
+              <h4>Beaches and Islands:</h4>
+              <p><strong>Relax on Patong Beach:</strong> The most famous and busiest beach, known for its lively atmosphere, nightlife, and water sports.</p>
+              <p><strong>Unwind on Kata Beach:</strong> A beautiful bay with excellent surfing conditions for beginners and a more relaxed vibe than Patong.</p>
+              <p><strong>Enjoy the tranquility of Karon Beach:</strong> A long stretch of sand popular for swimming and sunbathing, with a more laid-back atmosphere than Patong.</p>
+              <p><strong>Discover the beauty of Nai Harn Beach:</strong> A picturesque bay in the south, popular with locals and known for its stunning scenery and the nearby Promthep Cape.</p>
+              <p><strong>Explore Kamala Beach:</strong> A quieter beach with a relaxed atmosphere, popular with families.</p>
+              <p><strong>Visit Freedom Beach:</strong> A secluded and stunning beach accessible by longtail boat, offering pristine sands and clear waters.</p>
+              <p><strong>Island Hop to the Phi Phi Islands:</strong> Take a day trip or stay overnight to explore the iconic Maya Bay (from "The Beach"), Phi Phi Don, and Phi Phi Leh, known for their dramatic limestone cliffs and turquoise waters.</p>
+              <p><strong>Discover Phang Nga Bay:</strong> Famous for its striking limestone karsts rising vertically from the emerald green waters. Visit James Bond Island (Khao Phing Kan) and explore sea caves by kayak.</p>
+              <p><strong>Explore the Similan Islands (seasonal):</strong> A stunning archipelago known for its world-class diving and snorkeling, with pristine white-sand beaches and crystal-clear waters (usually open from mid-October to mid-May).</p>
+              <p><strong>Visit Racha Islands (Raya Yai & Raya Noi):</strong> Popular for snorkeling, diving, and relaxing on beautiful beaches.</p>
+              <h4>Temples and Culture:</h4>
+              <p><strong>See the Big Buddha:</strong> A massive white marble statue perched on a hilltop, offering panoramic views of the island.</p>
+              <p><strong>Visit Wat Chalong:</strong> Phuket's most important and largest temple, featuring beautiful architecture and intricate decorations.</p>
+              <p><strong>Explore Old Phuket Town:</strong> Wander through the colorful Sino-Portuguese architecture, browse art galleries, cafes, and shops.</p>
+              <p><strong>Visit Jui Tui Shrine:</strong> A significant and vibrant Chinese temple in Phuket Town.</p>
+              <h4>Other Activities</h4>
+              <p>Go ziplining through the jungle, Explore the Phuket FantaSea show, Hike to viewpoints, Experience the vibrant nightlife of Bangla Road (Patong), Enjoy rooftop bars, Catch a ladyboy cabaret show.</p>
+            </div>
+          </li>
+          <li>
+        <img src="images/samui.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Ko Samui</h3>
+              <p>Thailand's second-largest island, offers a diverse range of experiences, from stunning beaches and luxurious resorts to lush jungles and vibrant nightlife. Here's a list of the top things to do in Ko Samui:</p>
+              <h4>Beaches and Relaxation:</h4>
+              <p><strong>Relax on Chaweng Beach:</strong> The most popular and longest beach, known for its soft white sand, clear waters, and lively atmosphere with numerous resorts, restaurants, and bars.</p>
+              <p><strong>Unwind on Lamai Beach:</strong> A beautiful beach with a more relaxed vibe than Chaweng, offering a good mix of restaurants, shops, and nightlife.</p>
+              <p><strong>Discover the tranquility of Bophut Beach:</strong> Home to the charming Fisherman's Village with its wooden houses, boutique shops, and excellent dining options.</p>
+              <p><strong>Enjoy the serenity of Maenam Beach:</strong> A long, peaceful beach on the northern coast, ideal for families and those seeking a quieter escape.</p>
+              <p><strong>Explore the secluded Silver Beach (Thong Ta-kian):</strong> A small, picturesque cove with crystal-clear waters perfect for swimming and snorkeling.</p>
+              <p><strong>Visit Taling Ngam Beach:</strong> A quieter area on the southwestern tip, known for its stunning sunsets and natural beauty.</p>
+              <h4>Temples and Culture:</h4>
+              <p><strong>Visit the Big Buddha Temple (Wat Phra Yai):</strong> An iconic landmark featuring a massive golden Buddha statue visible from afar.</p>
+              <p><strong>Explore Wat Plai Laem:</strong> A colorful and ornate temple complex with impressive statues of Guanyin (Goddess of Mercy) and a smiling Buddha.</p>
+              <p><strong>See the Hin Ta and Hin Yai Rocks (Grandfather and Grandmother Rocks):</strong> Unique rock formations resembling male and female genitalia, a popular photo spot with a local legend.</p>
+              <h4>Nature and Adventure:</h4>
+              <p><strong>Explore Ang Thong Marine Park: </strong> Take a day trip to this stunning archipelago of 42 islands with dramatic limestone karsts, hidden lagoons, and pristine beaches. Activities include kayaking, hiking to viewpoints, and snorkeling.</p>
+              <p><strong>Discover Na Muang Waterfall:</strong> A series of picturesque waterfalls in the island's interior, with opportunities for swimming and elephant trekking (choose ethical sanctuaries).</p>
+              <p><strong>Hike to Secret Buddha Garden (Magic Garden):</strong> A quirky garden filled with unique stone statues created by a local fruit farmer.</p>
+              <p><strong>Visit the Overlap Stone:</strong> A precariously balanced large boulder offering impressive views.</p>
+              <h4></h4>
+              <p></p>
+            </div>
+          </li>
+        <!-- other items -->
+      </ul>
+    </div>
+  </section>
+
+  <div class="modal" id="todo-modal">
+    <span class="modal-close" id="modal-close">&times;</span>
+    <div class="modal-content">
+      <img src="" alt="Expanded Image" id="modal-img">
+      <div class="desc" id="modal-desc"></div>
+    </div>
+  </div>
+
+  <!-- 2. Food -->
+  <section id="food" class="section">
+    <h2>Thai Food</h2>
+    <div class="block-carousel-food" data-animated="true">
+      <ul class="carousel-items-food">
+        <li>
+          <img src="images/pad.jpg" alt="Phở">
+          <div class="desc-content-food">
+            <h3>Pad Thai</h3>
+            <p>A classic stir-fried rice noodle dish with a sweet, sour, and savory flavor profile, often featuring shrimp, tofu, or chicken. </p>
+          </div>
+        </li>
+        <li>
+            <img src="images/tom.jpg" alt="Phở">
+            <div class="desc-content-food">
+              <h3>Tom Yum Soup</h3>
+              <p>A hot and sour soup with a rich blend of lemongrass, galangal, chilies, and fish sauce, often featuring shrimp or seafood. </p>
+            </div>
+          </li>
+          <li>
+            <img src="images/green.jpg" alt="Phở">
+            <div class="desc-content-food">
+              <h3>Green Curry</h3>
+              <p>A creamy coconut milk-based curry with a blend of green chilies, lemongrass, galangal, and other spices, typically served with chicken, tofu, or beef. </p>
+            </div>
+          </li>
+          <li>
+            <img src="images/khao.jpg" alt="Phở">
+            <div class="desc-content-food">
+              <h3>Khao Soi</h3>
+              <p>A Northern Thai curry noodle soup with a rich coconut milk broth, egg noodles, and a variety of toppings like crispy noodles, pickled vegetables, and shallots. </p>
+            </div>
+          </li>
+          <li>
+            <img src="images/som.jpg" alt="Phở">
+            <div class="desc-content-food">
+              <h3>Som Tam</h3>
+              <p>A spicy and refreshing papaya salad with green papaya, peanuts, tomatoes, chilies, and a tangy dressing. </p>
+            </div>
+          </li>
+          <li>
+            <img src="images/mango.jpg" alt="Phở">
+            <div class="desc-content-food">
+              <h3>Mango Sticky Rice</h3>
+              <p>A popular dessert of sticky rice cooked in coconut milk and served with slices of ripe mango. </p>
+            </div>
+          </li>
+          <li>
+            <img src="images/massaman.jpg" alt="Phở">
+            <div class="desc-content-food">
+              <h3>Massaman Curry</h3>
+              <p>A mild and aromatic curry with a blend of coconut milk, peanut paste, and spices, often featuring beef, chicken, or potatoes.</p>
+            </div>
+          </li>
+        <!-- other food items -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. Estimate Cost -->
+  <section id="estimate-cost" class="section pricing-section">
+    <div class="pricing-card">
+        <h2>Estimated Cost (4 Days)</h2>
+      <table class="pricing-table">
+        <tr>
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td>Airfare</td>
+          <td><span class="price-badge">₱10,000.00</span></td>
+        </tr>
+        <tr>
+          <td>Lodging</td>
+          <td><span class="price-badge">₱8,000.00</span></td>
+        </tr>
+        <tr>
+          <td>Food</td>
+          <td><span class="price-badge">₱6,000.00</span></td>
+        </tr>
+        <tr>
+          <td>Others</td>
+          <td><span class="price-badge">₱10,000.00</span></td>
+        </tr>
+        <tr class="total-row">
+          <th>Total</th>
+          <th><span class="price-badge-total">₱34,000.00</span></th>
+        </tr>
+      </table>
+    </div>
+  </section>
+  
+
+  <script>
+    const logoImg = document.getElementById('logoGif');
+    const honk = document.getElementById('honkSound');
+  
+    logoImg.addEventListener('click', () => {
+      // rewind in case it’s already playing
+      honk.currentTime = 0;
+      honk.play();
+    });
+    const scrollers = document.querySelectorAll('.block-carousel');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function setupCarousel(reduce) {
+      scrollers.forEach(carousel => {
+        const items = carousel.querySelector('.carousel-items');
+        if (!reduce) {
+          carousel.setAttribute('data-animated', true);
+          items.querySelectorAll('li').forEach(li => {
+            const clone = li.cloneNode(true);
+            clone.setAttribute('aria-hidden', true);
+            items.appendChild(clone);
+          });
+        } else {
+          carousel.setAttribute('data-animated', false);
+          items.querySelectorAll('[aria-hidden]').forEach(clone => clone.remove());
+        }
+      });
+    }
+    setupCarousel(prefersReduced.matches);
+    prefersReduced.addEventListener('change', e => setupCarousel(e.matches));
+
+    // Modal
+    document.querySelectorAll('.carousel-items').forEach(list => {
+      list.addEventListener('click', e => {
+        if (e.target.tagName === 'IMG') {
+          const img = e.target;
+          const li = img.closest('li');
+          document.getElementById('modal-img').src = img.src;
+          document.getElementById('modal-desc').innerHTML = li.querySelector('.desc-content').innerHTML;
+          document.getElementById('todo-modal').style.display = 'flex';
+        }
+      });
+    });
+    document.getElementById('modal-close').addEventListener('click', () => document.getElementById('todo-modal').style.display = 'none');
+    document.getElementById('todo-modal').addEventListener('click', e => { if (e.target.id === 'todo-modal') e.target.style.display = 'none'; });
+  </script>
+</body>
+</html>

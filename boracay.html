@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boracay - 2025 Vacation Plan</title>
+  <style>
+    /* Base & Resets */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {overflow-y: auto;}
+    body { font-family: Arial, sans-serif; line-height: 1.5; overflow-y: auto;}
+    .section { padding: 2rem; }
+    h2 { text-align: center; margin-bottom: 1rem; }
+
+    /* Fullscreen Video Background */
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -3;
+      }
+      .video-container video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+        z-index: -2;
+      }
+      .video-container .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0);
+        z-index: -1;
+      }
+    /* Header & Navigation */
+    .header { position: absolute; top: 0; width: 100%; display: flex; justify-content: flex-start; align-items: center; padding: 1rem 2rem; background: rgba(0,0,0,0.2); z-index: 12; }
+    .logo { width: 50px; height: 50px; margin-right: 1rem; }
+    .logo img { width: 100%; height: 100%; object-fit: contain; }
+    nav ul { list-style: none; display: flex; }
+    nav ul li { position: relative; }
+    nav ul li a { display: block; padding: 0.5rem 1rem; color: #fff; text-decoration: none; }
+    nav ul li:hover > a { background: rgba(0,0,0,0.5); }
+    nav ul li ul { position: absolute; top: 100%; left: 0; background: rgba(0,0,0,0.6); display: none; list-style: none; min-width: 180px; }
+    nav ul li:hover > ul { display: block; }
+    nav ul li ul li ul { left: 100%; top: 0; }
+
+    /* Carousel common */
+    .block-carousel { position: relative; overflow: hidden; }
+    .carousel-items { list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: 23rem; gap: 1.5rem; animation: scroll 30s linear infinite; }
+    .block-carousel[data-animated="false"] .carousel-items { animation: none; }
+    .carousel-items li { cursor: pointer; position: relative; }
+    .carousel-items img { width: 100%; height: 22rem; object-fit: cover; border-radius: 24px; opacity:0.85;}
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 1rem)); } }
+
+    /* Description panel styling */
+    .desc-content { font-size:13px; letter-spacing: 1px; text-align:center; color:#f1f1f1; background-color: rgba(0,0,0,0.3);}
+    .modal .desc h3 { margin-bottom: 1rem; text-align: center; font-size:10px; letter-spacing: 1px;}
+    .modal .desc h4 { margin-top: 1rem; margin-left: 20px; margin-bottom:0.75rem; font-size:10px; letter-spacing: 1px;}
+    .modal .desc p { margin-left: 40px; margin-bottom: 0.75rem; font-size:10px; letter-spacing: 1px;}
+    .desc-content-food { font-size:13px; letter-spacing: 1px; text-align:center; color:#f1f1f1; background-color: rgba(0,0,0,0.3);}
+
+
+    /* Pricing Table Styles */
+    .pricing-section {
+        color: #F8F8F2;
+    }
+    .pricing-card {
+        background-color: rgba(52, 53, 68, 0.7);
+        text-align:center;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .pricing-table {
+        width: 100%;
+        text-align:center;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    .pricing-table tr {
+        border-bottom: 1px solid #444;
+        text-align:center;
+    }
+    .pricing-table td,
+    .pricing-table th {
+        padding: 1rem;
+        text-align:center;
+    }
+    .pricing-table .total-row {
+        text-align:center;
+        border: none;
+    }
+    .price-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        text-align:center;
+        font-weight: 600;
+        background: linear-gradient(90deg, #50fa7b, #8be9fd);
+        color: #282A36;
+    }
+    .price-badge-total {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        text-align:center;
+        font-weight: 600;
+        background: linear-gradient(90deg, #50d2fa, #8165f3);
+        color: #282A36;
+    }
+  
+
+    /* Responsive */
+    @media (max-width: 768px) { .header { flex-direction: column; } nav ul { flex-direction: column; width: 100%; } }
+  </style>
+</head>
+<body>
+    <div class="video-container">
+        <!-- The MP4 file is located alongside this HTML -->
+        <video src="images/pangasinan-bg.mp4" autoplay muted loop playsinline></video>
+        <div class="overlay"></div>
+    </div>
+  <header class="header">
+    <div class="logo">
+        <img src="images/logo.gif" alt="Vacation Plan Logo" id="logoGif" />
+      </div>
+      
+      <!-- hidden audio element -->
+      <audio id="honkSound" src="images/honk.mp3" preload="auto"></audio>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Options</a>
+            <ul>
+                <li><a href="#">Out-of-Town</a>
+                  <ul>
+                    <li><a href="aurora.html">Aurora</a></li>
+                    <li><a href="zambales.html">Zambales</a></li>
+                    <li><a href="el_nido.html">El Nido</a></li>
+                    <li><a href="batanes.html">Batanes</a></li>
+                    <li><a href="boracay.html">Pangasinan</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Out-of-Country</a>
+                  <ul>
+                    <li><a href="indonesia.html">Indonesia</a></li>
+                    <li><a href="thailand.html">Thailand</a></li>
+                    <li><a href="vietnam.html">Vietnam</a></li>
+                  </ul>
+                </li>
+              </ul>
+        </li>
+        <li><a href="cast-my-vote.html">Cast My Vote</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 1. Things to Do -->
+</br>
+</br>
+</br>
+  <section id="things-to-do" class="section">
+    <h2>Things to Do in Boracay</h2>
+    <div class="block-carousel" data-animated="true">
+      <ul class="carousel-items">
+        <li>
+          <img src="images/parasail.jpg" alt="Ha Long Bay">
+          <div class="desc-content">
+            <h3>Parasailing</h3>
+          </div>
+        </li>
+        <li>
+            <img src="images/scuba.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Scuba Diving</h3>
+            </div>
+          </li>
+          <li>
+            <img src="images/island.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Island Hopping</h3>
+            </div>
+          </li>
+          <li>
+            <img src="images/kayak.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Kayaking</h3>
+            </div>
+          </li>
+          <li>
+            <img src="images/banana.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Banana Boat</h3>
+            </div>
+          </li>
+          <li>
+            <img src="images/snork.jpg" alt="Ha Long Bay">
+            <div class="desc-content">
+              <h3>Snorkeling</h3>
+            </div>
+          </li>
+        <!-- other items -->
+      </ul>
+    </div>
+  </section>
+  <!-- 2. Estimate Cost -->
+  <section id="estimate-cost" class="section pricing-section">
+    <div class="pricing-card">
+        <h2>Estimated Cost (4 Days)</h2>
+      <table class="pricing-table">
+        <tr>
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td>Air Fare</td>
+          <td><span class="price-badge">₱6,000.00</span></td>
+        </tr>
+        <tr>
+          <td>Lodging</td>
+          <td><span class="price-badge">₱5,000.00</span></td>
+        </tr>
+        <tr>
+          <td>Food</td>
+          <td><span class="price-badge">₱5,000.00</span></td>
+        </tr>
+        <tr>
+          <td>Others (Activities, Entrance etc.)</td>
+          <td><span class="price-badge">₱15,000.00</span></td>
+        </tr>
+        <tr class="total-row">
+          <th>Total</th>
+          <th><span class="price-badge-total">₱31,000.00</span></th>
+        </tr>
+      </table>
+    </div>
+  </section>
+  
+
+  <script>
+    const logoImg = document.getElementById('logoGif');
+    const honk = document.getElementById('honkSound');
+  
+    logoImg.addEventListener('click', () => {
+      // rewind in case it’s already playing
+      honk.currentTime = 0;
+      honk.play();
+    });
+    const scrollers = document.querySelectorAll('.block-carousel');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function setupCarousel(reduce) {
+      scrollers.forEach(carousel => {
+        const items = carousel.querySelector('.carousel-items');
+        if (!reduce) {
+          carousel.setAttribute('data-animated', true);
+          items.querySelectorAll('li').forEach(li => {
+            const clone = li.cloneNode(true);
+            clone.setAttribute('aria-hidden', true);
+            items.appendChild(clone);
+          });
+        } else {
+          carousel.setAttribute('data-animated', false);
+          items.querySelectorAll('[aria-hidden]').forEach(clone => clone.remove());
+        }
+      });
+    }
+    setupCarousel(prefersReduced.matches);
+    prefersReduced.addEventListener('change', e => setupCarousel(e.matches));
+
+    // Modal
+    document.querySelectorAll('.carousel-items').forEach(list => {
+      list.addEventListener('click', e => {
+        if (e.target.tagName === 'IMG') {
+          const img = e.target;
+          const li = img.closest('li');
+          document.getElementById('modal-img').src = img.src;
+          document.getElementById('modal-desc').innerHTML = li.querySelector('.desc-content').innerHTML;
+          document.getElementById('todo-modal').style.display = 'flex';
+        }
+      });
+    });
+    document.getElementById('modal-close').addEventListener('click', () => document.getElementById('todo-modal').style.display = 'none');
+    document.getElementById('todo-modal').addEventListener('click', e => { if (e.target.id === 'todo-modal') e.target.style.display = 'none'; });
+  </script>
+</body>
+</html>
